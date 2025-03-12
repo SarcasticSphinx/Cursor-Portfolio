@@ -45,6 +45,7 @@ const Navbar = () => {
   const sidebarVariants = {
     open: {
       x: 0,
+      opacity: 1,
       transition: {
         type: "spring",
         stiffness: 200,
@@ -53,6 +54,7 @@ const Navbar = () => {
     },
     closed: {
       x: "-100%",
+      opacity: 0,
       transition: {
         type: "spring",
         stiffness: 300,
@@ -115,9 +117,9 @@ const Navbar = () => {
             animate="open"
             exit="closed"
             variants={sidebarVariants}
-            className="lg:hidden fixed left-0 top-0 h-screen w-64 bg-gray-900/95 backdrop-blur z-30 flex flex-col items-start justify-center px-6 mobile-menu"
+            className="lg:hidden fixed left-0 top-0 h-screen w-64 bg-gray-900/95 backdrop-blur z-30 mobile-menu"
           >
-            <div className="w-full space-y-6">
+            <div className="flex flex-col items-start justify-center h-full px-6 py-20">
               {navItems.map((item) => {
                 const isActive = location.pathname === item.path;
                 return (
@@ -125,25 +127,14 @@ const Navbar = () => {
                     key={item.path}
                     to={item.path}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center space-x-4 p-3 rounded-lg transition-all duration-300 w-full ${
+                    className={`flex items-center space-x-4 w-full p-4 rounded-lg mb-4 transition-all duration-300 ${
                       isActive
                         ? "text-yellow-500 bg-yellow-500/10"
                         : "text-gray-400 hover:text-yellow-500 hover:bg-yellow-500/5"
                     }`}
                   >
-                    <div className="text-xl">{item.icon}</div>
+                    <div className="text-2xl">{item.icon}</div>
                     <span className="text-lg">{item.text}</span>
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeMobileTab"
-                        className="absolute inset-0 bg-yellow-500/10 rounded-lg"
-                        transition={{
-                          type: "spring",
-                          stiffness: 300,
-                          damping: 30,
-                        }}
-                      />
-                    )}
                   </Link>
                 );
               })}
